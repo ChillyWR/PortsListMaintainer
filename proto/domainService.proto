@@ -1,0 +1,14 @@
+syntax = "proto3";
+package proto;
+
+message Port{
+  string port = 1;
+}
+
+message RequestToListPort{}
+message Success{}
+
+service AddService{
+  rpc ListPort(RequestToListPort) returns (Port);
+  rpc AddPort(Port) returns (Success);
+}
