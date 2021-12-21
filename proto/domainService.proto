@@ -2,13 +2,22 @@ syntax = "proto3";
 package proto;
 
 message Port{
-  string port = 1;
+  int32 port = 1;
 }
 
-message RequestToListPort{}
+message Ports{
+  map<int32, int32> ports = 64;
+}
+
+message RequestToListPorts{
+  int64 idLower = 1;
+  int64 idUpper = 2;
+  int32 portLower = 3;
+  int32 portUpper = 4;
+}
 message Success{}
 
 service AddService{
-  rpc ListPort(RequestToListPort) returns (Port);
+  rpc ListPort(RequestToListPorts) returns (Ports);
   rpc AddPort(Port) returns (Success);
 }

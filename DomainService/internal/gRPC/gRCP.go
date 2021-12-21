@@ -2,6 +2,7 @@ package gRPC
 
 import (
 	"context"
+	"github.com/ChillyWR/PortsListMaintainer/DomainService/internal/db"
 	"github.com/ChillyWR/PortsListMaintainer/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
@@ -9,15 +10,24 @@ import (
 	"net"
 )
 
+var repo = db.ConnectWithGorm()
+
 type server struct{}
 
-func (s *server) ListPort(ctx context.Context, request *proto.RequestToListPort) (*proto.Port, error) {
+func (s *server) ListPort(ctx context.Context, request *proto.RequestToListPorts) (*proto.Ports, error) {
 	//TODO: get ports from database
-	return &proto.Port{Port: "test port"}, nil
+	log.Printf("Got request to list ports")
+	//idLower := request.GetIdLower()
+	//idUpper := request.GetIdUpper()
+	//portLower := request.GetPortLower()
+	//portUpper := request.GetPortUpper()
+	result := repo.ListPorts()
+	return &proto.Ports{Ports: result}, nil
 }
 
 func (s *server) AddPort(ctx context.Context, port *proto.Port) (*proto.Success, error) {
 	log.Printf("Got port %s", port.Port)
+	repo.UpsertPort(port.Port)
 	//TODO: upsert ports to database
 	return &proto.Success{}, nil
 }

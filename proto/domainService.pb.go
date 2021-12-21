@@ -25,7 +25,7 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type Port struct {
-	Port                 string   `protobuf:"bytes,1,opt,name=port,proto3" json:"port,omitempty"`
+	Port                 int32    `protobuf:"varint,1,opt,name=port,proto3" json:"port,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -55,42 +55,112 @@ func (m *Port) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Port proto.InternalMessageInfo
 
-func (m *Port) GetPort() string {
+func (m *Port) GetPort() int32 {
 	if m != nil {
 		return m.Port
 	}
-	return ""
+	return 0
 }
 
-type RequestToListPort struct {
+type Ports struct {
+	Ports                map[int32]int32 `protobuf:"bytes,64,rep,name=ports,proto3" json:"ports,omitempty" protobuf_key:"varint,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *Ports) Reset()         { *m = Ports{} }
+func (m *Ports) String() string { return proto.CompactTextString(m) }
+func (*Ports) ProtoMessage()    {}
+func (*Ports) Descriptor() ([]byte, []int) {
+	return fileDescriptor_67ca8b8846aa07da, []int{1}
+}
+func (m *Ports) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Ports.Unmarshal(m, b)
+}
+func (m *Ports) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Ports.Marshal(b, m, deterministic)
+}
+func (m *Ports) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Ports.Merge(m, src)
+}
+func (m *Ports) XXX_Size() int {
+	return xxx_messageInfo_Ports.Size(m)
+}
+func (m *Ports) XXX_DiscardUnknown() {
+	xxx_messageInfo_Ports.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Ports proto.InternalMessageInfo
+
+func (m *Ports) GetPorts() map[int32]int32 {
+	if m != nil {
+		return m.Ports
+	}
+	return nil
+}
+
+type RequestToListPorts struct {
+	IdLower              int64    `protobuf:"varint,1,opt,name=idLower,proto3" json:"idLower,omitempty"`
+	IdUpper              int64    `protobuf:"varint,2,opt,name=idUpper,proto3" json:"idUpper,omitempty"`
+	PortLower            int32    `protobuf:"varint,3,opt,name=portLower,proto3" json:"portLower,omitempty"`
+	PortUpper            int32    `protobuf:"varint,4,opt,name=portUpper,proto3" json:"portUpper,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *RequestToListPort) Reset()         { *m = RequestToListPort{} }
-func (m *RequestToListPort) String() string { return proto.CompactTextString(m) }
-func (*RequestToListPort) ProtoMessage()    {}
-func (*RequestToListPort) Descriptor() ([]byte, []int) {
-	return fileDescriptor_67ca8b8846aa07da, []int{1}
+func (m *RequestToListPorts) Reset()         { *m = RequestToListPorts{} }
+func (m *RequestToListPorts) String() string { return proto.CompactTextString(m) }
+func (*RequestToListPorts) ProtoMessage()    {}
+func (*RequestToListPorts) Descriptor() ([]byte, []int) {
+	return fileDescriptor_67ca8b8846aa07da, []int{2}
 }
-func (m *RequestToListPort) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_RequestToListPort.Unmarshal(m, b)
+func (m *RequestToListPorts) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_RequestToListPorts.Unmarshal(m, b)
 }
-func (m *RequestToListPort) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_RequestToListPort.Marshal(b, m, deterministic)
+func (m *RequestToListPorts) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_RequestToListPorts.Marshal(b, m, deterministic)
 }
-func (m *RequestToListPort) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RequestToListPort.Merge(m, src)
+func (m *RequestToListPorts) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RequestToListPorts.Merge(m, src)
 }
-func (m *RequestToListPort) XXX_Size() int {
-	return xxx_messageInfo_RequestToListPort.Size(m)
+func (m *RequestToListPorts) XXX_Size() int {
+	return xxx_messageInfo_RequestToListPorts.Size(m)
 }
-func (m *RequestToListPort) XXX_DiscardUnknown() {
-	xxx_messageInfo_RequestToListPort.DiscardUnknown(m)
+func (m *RequestToListPorts) XXX_DiscardUnknown() {
+	xxx_messageInfo_RequestToListPorts.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_RequestToListPort proto.InternalMessageInfo
+var xxx_messageInfo_RequestToListPorts proto.InternalMessageInfo
+
+func (m *RequestToListPorts) GetIdLower() int64 {
+	if m != nil {
+		return m.IdLower
+	}
+	return 0
+}
+
+func (m *RequestToListPorts) GetIdUpper() int64 {
+	if m != nil {
+		return m.IdUpper
+	}
+	return 0
+}
+
+func (m *RequestToListPorts) GetPortLower() int32 {
+	if m != nil {
+		return m.PortLower
+	}
+	return 0
+}
+
+func (m *RequestToListPorts) GetPortUpper() int32 {
+	if m != nil {
+		return m.PortUpper
+	}
+	return 0
+}
 
 type Success struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -102,7 +172,7 @@ func (m *Success) Reset()         { *m = Success{} }
 func (m *Success) String() string { return proto.CompactTextString(m) }
 func (*Success) ProtoMessage()    {}
 func (*Success) Descriptor() ([]byte, []int) {
-	return fileDescriptor_67ca8b8846aa07da, []int{2}
+	return fileDescriptor_67ca8b8846aa07da, []int{3}
 }
 func (m *Success) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Success.Unmarshal(m, b)
@@ -124,24 +194,33 @@ var xxx_messageInfo_Success proto.InternalMessageInfo
 
 func init() {
 	proto.RegisterType((*Port)(nil), "proto.Port")
-	proto.RegisterType((*RequestToListPort)(nil), "proto.RequestToListPort")
+	proto.RegisterType((*Ports)(nil), "proto.Ports")
+	proto.RegisterMapType((map[int32]int32)(nil), "proto.Ports.PortsEntry")
+	proto.RegisterType((*RequestToListPorts)(nil), "proto.RequestToListPorts")
 	proto.RegisterType((*Success)(nil), "proto.Success")
 }
 
 func init() { proto.RegisterFile("domainService.proto", fileDescriptor_67ca8b8846aa07da) }
 
 var fileDescriptor_67ca8b8846aa07da = []byte{
-	// 152 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x4e, 0xc9, 0xcf, 0x4d,
-	0xcc, 0xcc, 0x0b, 0x4e, 0x2d, 0x2a, 0xcb, 0x4c, 0x4e, 0xd5, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17,
-	0x62, 0x05, 0x53, 0x4a, 0x52, 0x5c, 0x2c, 0x01, 0xf9, 0x45, 0x25, 0x42, 0x42, 0x5c, 0x2c, 0x05,
-	0xf9, 0x45, 0x25, 0x12, 0x8c, 0x0a, 0x8c, 0x1a, 0x9c, 0x41, 0x60, 0xb6, 0x92, 0x30, 0x97, 0x60,
-	0x50, 0x6a, 0x61, 0x69, 0x6a, 0x71, 0x49, 0x48, 0xbe, 0x4f, 0x66, 0x71, 0x09, 0x48, 0xa1, 0x12,
-	0x27, 0x17, 0x7b, 0x70, 0x69, 0x72, 0x72, 0x6a, 0x71, 0xb1, 0x51, 0x3a, 0x17, 0x97, 0x63, 0x4a,
-	0x0a, 0xd4, 0x58, 0x21, 0x43, 0x2e, 0x0e, 0x98, 0x22, 0x21, 0x09, 0x88, 0x25, 0x7a, 0x18, 0xda,
-	0xa5, 0xb8, 0xa1, 0x32, 0x60, 0x65, 0x6a, 0x5c, 0xec, 0x8e, 0x29, 0x29, 0x60, 0x26, 0xb2, 0xb8,
-	0x14, 0x1f, 0x94, 0x03, 0xb5, 0x28, 0x89, 0x0d, 0xcc, 0x35, 0x06, 0x04, 0x00, 0x00, 0xff, 0xff,
-	0x81, 0xee, 0x46, 0x13, 0xc9, 0x00, 0x00, 0x00,
+	// 269 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x64, 0x90, 0x31, 0x4f, 0xfb, 0x30,
+	0x10, 0xc5, 0x95, 0x26, 0xfe, 0xe7, 0xdf, 0x2b, 0x42, 0xe8, 0x40, 0x22, 0x44, 0x0c, 0x55, 0x06,
+	0xd4, 0x85, 0x0e, 0xed, 0x52, 0x31, 0xd1, 0x81, 0xad, 0x03, 0x4a, 0xe1, 0x03, 0x94, 0xf8, 0x06,
+	0x0b, 0xa8, 0x8d, 0xed, 0x14, 0x75, 0xe7, 0x83, 0xa3, 0x9c, 0x1d, 0xa5, 0x12, 0x4b, 0x72, 0xef,
+	0xfd, 0x7c, 0xef, 0x4e, 0x07, 0x97, 0x52, 0x7f, 0xee, 0xd4, 0x7e, 0x4b, 0xf6, 0xa0, 0x1a, 0x9a,
+	0x1b, 0xab, 0xbd, 0x46, 0xc1, 0xbf, 0xaa, 0x84, 0xec, 0x59, 0x5b, 0x8f, 0x08, 0x99, 0xd1, 0xd6,
+	0x17, 0xc9, 0x34, 0x99, 0x89, 0x9a, 0xeb, 0xca, 0x80, 0xe8, 0x98, 0xc3, 0x7b, 0x10, 0x9d, 0xe1,
+	0x8a, 0xc7, 0x69, 0x3a, 0x9b, 0x2c, 0xae, 0x43, 0xc4, 0x9c, 0x61, 0xf8, 0x3e, 0xed, 0xbd, 0x3d,
+	0xd6, 0xe1, 0x55, 0xb9, 0x02, 0x18, 0x4c, 0xbc, 0x80, 0xf4, 0x9d, 0x8e, 0x31, 0xb8, 0x2b, 0xf1,
+	0x0a, 0xc4, 0x61, 0xf7, 0xd1, 0x52, 0x31, 0x62, 0x2f, 0x88, 0x87, 0xd1, 0x2a, 0xa9, 0x7e, 0x12,
+	0xc0, 0x9a, 0xbe, 0x5a, 0x72, 0xfe, 0x45, 0x6f, 0x94, 0xf3, 0x61, 0x7e, 0x01, 0xb9, 0x92, 0x1b,
+	0xfd, 0x4d, 0x96, 0x63, 0xd2, 0xba, 0x97, 0x81, 0xbc, 0x1a, 0x43, 0x96, 0xc3, 0x98, 0xb0, 0xc4,
+	0x5b, 0x18, 0x77, 0xdb, 0x84, 0xae, 0x94, 0x07, 0x0d, 0x46, 0x4f, 0x43, 0x67, 0x36, 0x50, 0x36,
+	0xaa, 0x31, 0xe4, 0xdb, 0xb6, 0x69, 0xc8, 0xb9, 0x85, 0x02, 0x58, 0x4b, 0x19, 0x4f, 0x87, 0x4b,
+	0xf8, 0xdf, 0x6f, 0x85, 0x37, 0xf1, 0x0a, 0x7f, 0xf7, 0x2d, 0xcf, 0x4e, 0x0f, 0x84, 0x77, 0x90,
+	0xaf, 0xa5, 0xe4, 0x9e, 0xc9, 0x09, 0x28, 0xcf, 0xa3, 0x88, 0xa3, 0xde, 0xfe, 0xb1, 0x5c, 0xfe,
+	0x06, 0x00, 0x00, 0xff, 0xff, 0xb6, 0x0c, 0xbe, 0x2b, 0xaf, 0x01, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -156,7 +235,7 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type AddServiceClient interface {
-	ListPort(ctx context.Context, in *RequestToListPort, opts ...grpc.CallOption) (*Port, error)
+	ListPort(ctx context.Context, in *RequestToListPorts, opts ...grpc.CallOption) (*Ports, error)
 	AddPort(ctx context.Context, in *Port, opts ...grpc.CallOption) (*Success, error)
 }
 
@@ -168,8 +247,8 @@ func NewAddServiceClient(cc *grpc.ClientConn) AddServiceClient {
 	return &addServiceClient{cc}
 }
 
-func (c *addServiceClient) ListPort(ctx context.Context, in *RequestToListPort, opts ...grpc.CallOption) (*Port, error) {
-	out := new(Port)
+func (c *addServiceClient) ListPort(ctx context.Context, in *RequestToListPorts, opts ...grpc.CallOption) (*Ports, error) {
+	out := new(Ports)
 	err := c.cc.Invoke(ctx, "/proto.AddService/ListPort", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -188,7 +267,7 @@ func (c *addServiceClient) AddPort(ctx context.Context, in *Port, opts ...grpc.C
 
 // AddServiceServer is the server API for AddService service.
 type AddServiceServer interface {
-	ListPort(context.Context, *RequestToListPort) (*Port, error)
+	ListPort(context.Context, *RequestToListPorts) (*Ports, error)
 	AddPort(context.Context, *Port) (*Success, error)
 }
 
@@ -196,7 +275,7 @@ type AddServiceServer interface {
 type UnimplementedAddServiceServer struct {
 }
 
-func (*UnimplementedAddServiceServer) ListPort(ctx context.Context, req *RequestToListPort) (*Port, error) {
+func (*UnimplementedAddServiceServer) ListPort(ctx context.Context, req *RequestToListPorts) (*Ports, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPort not implemented")
 }
 func (*UnimplementedAddServiceServer) AddPort(ctx context.Context, req *Port) (*Success, error) {
@@ -208,7 +287,7 @@ func RegisterAddServiceServer(s *grpc.Server, srv AddServiceServer) {
 }
 
 func _AddService_ListPort_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RequestToListPort)
+	in := new(RequestToListPorts)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -220,7 +299,7 @@ func _AddService_ListPort_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: "/proto.AddService/ListPort",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AddServiceServer).ListPort(ctx, req.(*RequestToListPort))
+		return srv.(AddServiceServer).ListPort(ctx, req.(*RequestToListPorts))
 	}
 	return interceptor(ctx, in, info, handler)
 }
