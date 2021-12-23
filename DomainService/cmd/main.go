@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	repo := db.ConnectWithGorm()
-	_ = repo
-	gRPC.StartServer()
+	repo := db.ConnectToDBWithGorm()
+	defer repo.CloseConnectionWithDB()
+	gRPC.StartServer(repo)
 }

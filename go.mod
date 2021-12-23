@@ -4,6 +4,7 @@ go 1.17
 
 require (
 	github.com/gogo/protobuf v1.3.2
+	github.com/gorilla/mux v1.8.0
 	github.com/lib/pq v1.10.4
 	google.golang.org/grpc v1.43.0
 	gorm.io/driver/postgres v1.0.8
@@ -11,7 +12,6 @@ require (
 )
 
 require (
-	github.com/fatih/structs v1.1.0 // indirect
 	github.com/gofrs/uuid v4.0.0+incompatible // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-cmp v0.5.6 // indirect

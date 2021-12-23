@@ -1,0 +1,40 @@
+syntax = "proto3";
+package proto;
+
+message Port {
+  int64 ID = 1;
+  string Name = 2;
+  bool IsActive = 3;
+  string Company = 4;
+  string Email = 5;
+  string Phone = 6;
+  string Address = 7;
+  string About = 8;
+  string Registered = 9;
+  float Latitude = 10;
+  float Longitude = 11;
+}
+
+message Ports{
+  repeated Port ports = 1;
+}
+
+message RequestToListPorts{
+    FilterVars filters = 1;
+}
+
+message FilterVars{
+  int64 idLower = 1;
+  int64 idUpper = 2;
+  string filterString = 3;
+}
+
+message DefaultResponse{
+  bool success = 1;
+  repeated int64 savedIdRecord = 2;
+}
+
+service AddService{
+  rpc ListPort(RequestToListPorts) returns (Ports);
+  rpc UpsertPorts(Ports) returns (DefaultResponse);
+}
