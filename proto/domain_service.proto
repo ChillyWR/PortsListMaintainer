@@ -24,9 +24,10 @@ message RequestToListPorts{
 }
 
 message FilterVars{
-  int64 idLower = 1;
-  int64 idUpper = 2;
-  string filterString = 3;
+  int64 id = 1;
+  int64 idLower = 2;
+  int64 idUpper = 3;
+  string filterString = 4;
 }
 
 message DefaultResponse{

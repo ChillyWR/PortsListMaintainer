@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/ChillyWR/PortsListMaintainer/ClientAPIService/pkg"
+	"github.com/ChillyWR/PortsListMaintainer/config"
 	"github.com/ChillyWR/PortsListMaintainer/proto"
 	"github.com/gorilla/mux"
 	"log"
@@ -17,33 +19,38 @@ type ClientAPI struct {
 func (c *ClientAPI) HandleRequests() {
 	myRouter := mux.NewRouter().StrictSlash(true)
 	myRouter.HandleFunc("/list_ports", c.ListPorts).Methods("GET")
-	//myRouter.HandleFunc("/upload_port", c.UploadPort).Methods("POST")
+	myRouter.HandleFunc("/list_ports/{FilterString}", c.ListPorts).Methods("GET")
+	myRouter.HandleFunc("/list_port/{Id}", c.ListPorts).Methods("GET")
+	myRouter.HandleFunc("/list_ports/{IdLower}/{IdUpper}", c.ListPorts).Methods("GET")
 	myRouter.HandleFunc("/upload_ports", c.UploadPorts).Methods("POST")
 
-	log.Fatal(http.ListenAndServe(":10000", myRouter))
+	log.Fatal(http.ListenAndServe(":"+config.ClientPort, myRouter))
 }
 
-func (c *ClientAPI) ListPorts(w http.ResponseWriter, _ *http.Request) {
+func (c *ClientAPI) ListPorts(w http.ResponseWriter, r *http.Request) {
 	log.Println("Endpoint Hit: ListPorts")
+	vars := mux.Vars(r)
+	Id, IdLower, IdUpper, FilterString := pkg.ParseFilters(vars)
 	ports, err := c.domainConnection.ClientService.ListPort(context.Background(), &proto.RequestToListPorts{Filters: &proto.FilterVars{
-		IdLower:      -1,
-		IdUpper:      -1,
-		FilterString: "",
+		Id:           Id,
+		IdLower:      IdLower,
+		IdUpper:      IdUpper,
+		FilterString: FilterString,
 	}})
 	if err != nil {
-		log.Fatalf("Failed to call ClientService.ListPort method:, %v", err)
+		log.Printf("Failed to call ClientService.ListPort method:, %v", err)
 	}
 	if len(ports.GetPorts()) == 0 {
 		_, err := fmt.Fprintln(w, "None found")
 		if err != nil {
-			log.Fatalf("Failed to write response: %v", err)
+			log.Printf("Failed to write response: %v", err)
 		}
 	} else {
 		w.Header().Set("Content-Type", "application/json")
 		err = json.NewEncoder(w).Encode(ports.Ports)
-	}
-	if err != nil {
-		log.Fatalf("Failed to encode ports: %v\n -> Failed to write responce", err)
+		if err != nil {
+			log.Printf("Failed to encode ports: %v\n -> Failed to write responce", err)
+		}
 	}
 }
 
@@ -69,7 +76,7 @@ func (c *ClientAPI) UploadPorts(w http.ResponseWriter, r *http.Request) {
 	var ports []*proto.Port
 	_ = json.NewDecoder(r.Body).Decode(&ports)
 	success, err := c.domainConnection.ClientService.UpsertPorts(context.Background(), &proto.Ports{Ports: ports})
-	if success.Success == false || err != nil {
+	if !success.Success || err != nil {
 		log.Fatalf("Failed to call UpsertPort method:, %v", err)
 	} else {
 		_, err := fmt.Fprintf(w, "Successfully saved record with id %v", success.GetSavedIdRecord())
